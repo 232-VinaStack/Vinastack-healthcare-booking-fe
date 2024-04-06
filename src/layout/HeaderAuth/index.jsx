@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './header.module.css'
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react'
 
-const Header = () => {
+const HeaderAuth = () => {
   return (
     <div className={styles.root}>
       <SignedOut>
@@ -15,4 +15,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default HeaderAuth
