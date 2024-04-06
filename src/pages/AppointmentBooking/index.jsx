@@ -1,7 +1,6 @@
 import React from 'react';
 import { Calendar, theme, Space, TimePicker, Button } from 'antd';
 import Styles from './style.module.css';
-import { SelectionPicker } from '@/components';
 
 export const AppointmentBooking = () => {
   const { token } = theme.useToken();
