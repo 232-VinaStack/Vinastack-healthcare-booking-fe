@@ -3,8 +3,8 @@ import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
 import { PiStudent } from 'react-icons/pi';
 import { Button } from 'antd';
 import { Avatar, List, Space } from 'antd';
-import { Axios } from 'axios';
-
+import axios from 'axios';
+import { useState } from 'react';
 const IconText = ({ icon, text }) => (
   <Space>
     {React.createElement(icon)}
@@ -12,51 +12,51 @@ const IconText = ({ icon, text }) => (
   </Space>
 );
 const ListDoctor = () => {
-  const listDoctor = [
-    {
-        "id": 0,
-        "name": "Nguyễn Văn A",
-        "avatarLink": null,
-        "expYear": null,
-        "education": null,
-        "clinics": []
-    },
-    {
-        "id": 1,
-        "name": "Bob Johnson",
-        "avatarLink": null,
-        "expYear": 10,
-        "education": "Doctor of Philosophy in Physics",
-        "clinics": []
-    },
-    {
-        "id": 2,
-        "name": "Charlie Garcia",
-        "avatarLink": "https://example.com/charlie.jpg",
-        "expYear": 7,
-        "education": "Bachelor of Science in Engineering",
-        "clinics": []
-    }
-  ]
+  // const listDoctor = [
+  //   {
+  //       "id": 0,
+  //       "name": "Nguyễn Văn A",
+  //       "avatarLink": null,
+  //       "expYear": null,
+  //       "education": null,
+  //       "clinics": []
+  //   },
+  //   {
+  //       "id": 1,
+  //       "name": "Bob Johnson",
+  //       "avatarLink": null,
+  //       "expYear": 10,
+  //       "education": "Doctor of Philosophy in Physics",
+  //       "clinics": []
+  //   },
+  //   {
+  //       "id": 2,
+  //       "name": "Charlie Garcia",
+  //       "avatarLink": "https://example.com/charlie.jpg",
+  //       "expYear": 7,
+  //       "education": "Bachelor of Science in Engineering",
+  //       "clinics": []
+  //   }
+  // ]
   
   
-  // const [data, setdata] = useState(null);
+  const [data, setdata] = useState(null);
 
-  // useEffect(() => {
-  //   // Hàm fetchApiData sử dụng Axios để gửi yêu cầu GET đến API
-  //   const fetchApiData = async () => {
-  //     try {
-  //       const response = await Axios.get('http://localhost:8080/doctor');
-  //       setdata(response.data);
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-  //   // Gọi hàm fetchApiData khi component được mount
-  //   fetchApiData();
-  // }, []); // [] đảm bảo useEffect chỉ chạy một lần khi component được mount
-  // if (!data) return <></>;
+  useEffect(() => {
+    // Hàm fetchApiData sử dụng Axios để gửi yêu cầu GET đến API
+    const fetchApiData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/doctor');
+        setdata(response.data);
+        console.log(response);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    // Gọi hàm fetchApiData khi component được mount
+    fetchApiData();
+  }, []); // [] đảm bảo useEffect chỉ chạy một lần khi component được mount
+  if (!data) return <></>;
   return (
     <List
       itemLayout="vertical"
@@ -67,7 +67,7 @@ const ListDoctor = () => {
         },
         pageSize: 3,
       }}
-      dataSource={listDoctor}
+      dataSource={data}
       renderItem={(item) => (
         <List.Item
           key={item.title}
