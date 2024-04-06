@@ -5,7 +5,7 @@ import { Button, Flex } from 'antd';
 import DeleteAppoinmentModal from '../../components/DeleteAppoinmentModal';
 
 const index = () => {
-IsModalOpen] = useState(false);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
