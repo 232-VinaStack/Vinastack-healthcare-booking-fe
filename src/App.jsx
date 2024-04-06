@@ -1,12 +1,14 @@
-import Routers from './Routers/Routers'
+import Routers from './Routers/Routers';
+import { Layout } from './layout/layout';
 
 function App() {
-
   return (
     <div>
-      <Routers />
+      <Layout>
+        <Routers />
+      </Layout>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
