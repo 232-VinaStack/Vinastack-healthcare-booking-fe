@@ -1,12 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Modal, Space, Calendar, theme, TimePicker } from 'antd';
+import { useDispatch } from 'react-redux';
 import Style from './style.module.css';
+import {
+  makeAppointment,
+  sendAppointment,
+} from '@/redux/slices/appointmentSlice';
 
 const DateTimePickerModal = ({ title, open, setOpen }) => {
   const { token } = theme.useToken();
+  const dispatch = useDispatch();
 
   const onPanelChange = (value, mode) => {
-    console.log(value.format('YYYY-MM-DD'), mode);
+    dispatch(
+      makeAppointment({
+        field: 'appointment_date',
+        fieldData: value.format('DD-MM-YYYY'),
+      })
+    );
+  };
+
+  const onChangeTime = (value, dateString) => {
+    dispatch(
+      makeAppointment({
+        field: 'start_time',
+        fieldData: dateString[0],
+      })
+    );
+    dispatch(
+      makeAppointment({
+        field: 'end_time',
+        fieldData: dateString[1],
+      })
+    );
   };
 
   const wrapperStyle = {
@@ -15,13 +41,16 @@ const DateTimePickerModal = ({ title, open, setOpen }) => {
     borderRadius: token.borderRadiusLG,
   };
 
-  const handleOk = () => {
+  const handleOk = (e) => {
+    e.preventDefault();
+    dispatch(sendAppointment());
     setOpen(false);
   };
 
   const handleCancel = () => {
     setOpen(false);
   };
+
   return (
     <>
       <Modal
@@ -39,10 +68,19 @@ const DateTimePickerModal = ({ title, open, setOpen }) => {
         <div className={Style.container}>
           <Space direction="vertical" style={{ alignItems: 'center' }}>
             <div style={wrapperStyle}>
-              <Calendar fullscreen={false} onPanelChange={onPanelChange} />
+              <Calendar
+                fullscreen={false}
+                onChange={(value, mode) => onPanelChange(value, mode)}
+              />
             </div>
             <div>
-              <TimePicker.RangePicker />
+              <TimePicker.RangePicker
+                onChange={(value, dateString) =>
+                  onChangeTime(value, dateString)
+                }
+                format={'HH:mm'}
+                minuteStep={15}
+              />
             </div>
           </Space>
         </div>
