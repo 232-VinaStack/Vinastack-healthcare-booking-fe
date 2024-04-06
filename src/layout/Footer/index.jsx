@@ -4,7 +4,7 @@ import styles from './footer.module.css'
 const Footer = () => {
   return (
     <div>
-      Footer
+      @2024 Made by ViNaStack
     </div>
   )
 }
