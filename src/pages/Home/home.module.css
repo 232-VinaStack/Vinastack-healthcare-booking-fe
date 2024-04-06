@@ -1,7 +1,47 @@
-.root{
+.wrapper {
+    margin: 32px;
+}
+
+.root {
     color: chocolate;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     align-items: space-around;
+}
+
+.symtomps {
+    margin: 12px;
+    cursor: pointer;
+}
+
+.symtomp {
+    width: 282px;
+    height: 82px;
+    border: 1px solid black;
+    border-radius: 8px;
+    display: flex;
+}
+
+.symtomp_image {
+    box-sizing: content-box;
+    height: auto;
+    max-width: 30%;
+    margin: 16px;
+}
+
+.img {
+    height: 100%;
+    width: 100%;
+}
+
+.description {
+    box-sizing: content-box;
+    margin: 16px 8px;
+    width: 70%;
+    height: auto;
+}
+
+.button {
+    float: right;
 }
