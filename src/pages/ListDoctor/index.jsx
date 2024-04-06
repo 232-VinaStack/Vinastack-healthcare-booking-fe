@@ -12,9 +12,6 @@ const IconText = ({ icon, text }) => (
   </Space>
 );
 const ListDoctor = () => {
-
-  
-  
   const [data, setdata] = useState(null);
 
   useEffect(() => {
