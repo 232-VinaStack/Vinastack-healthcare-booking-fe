@@ -1,0 +1,100 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 62.5%; /* font-size = 10px = 1rem */
+    font-family: "JetBrains Mono", monospace;
+  }
+  
+  header {
+    text-align: center;
+  }
+  
+  .heading-primary {
+    font-size: 4.8rem;
+    margin: 3.6rem 0;
+  }
+  
+  .navigation {
+    text-align: center;
+    font-size: 2.4rem;
+    margin: 3.6rem 0;
+  }
+  
+  .link:link,
+  .link:visited {
+    text-decoration: none;
+    color: #333;
+    padding: 1.2rem 2.4rem;
+    border: 1px solid #000;
+    font-weight: 600;
+    border-radius: 1rem;
+    background-color: #ADD8E6;
+    transition: all 500ms;
+  }
+  
+  .link:not(:last-child) {
+    margin-right: 6.4rem;
+  }
+  
+  .link:hover,
+  .link:active {
+    color: #f7fbfd;
+    background-color: #232b2e;
+  }
+  
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.8rem;
+  }
+  
+  .doctor-form {
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+    width: 50%;
+    gap: 2.4rem;
+    font-size: 2.4rem;
+  }
+  
+  .doctor-box {
+    display: flex;
+    flex-direction: row;
+    gap: 2.4rem;
+  }
+  
+  .btns {
+    margin-bottom: 4.8rem;
+    display: flex;
+    flex-direction: row;
+    gap: 3.6rem;
+  }
+  
+  btn {
+    font-size: 1.8rem;
+    padding: 1.2rem 2.4rem;
+    
+  }
+  
+  .doctor-date {
+    display: flex;
+    flex-direction: row;
+    gap: 3.6rem;
+    align-items: center;
+  }
+  
+  .doctor-figure {
+    display: flex;
+    flex-direction: column;
+    padding: 2.4rem 1.2rem;
+    gap: 2.4rem;
+  }
+  
+  img {
+    width: 50%;
+  }
