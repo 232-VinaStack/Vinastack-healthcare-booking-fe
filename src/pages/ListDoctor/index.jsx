@@ -91,12 +91,12 @@ const ListDoctor = () => {
             <img
               width={272}
               alt="logo"
-              src="https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?size=626&ext=jpg&ga=GA1.1.1700460183.1712275200&semt=sph"
+              src="https://picsum.photos/200/300"
             />
           }
         >
           <List.Item.Meta
-            avatar={<Avatar src={item.avatarLink} />}
+            avatar={<Avatar src="https://picsum.photos/200/300" />}
             title={<a href={item.href}>{item.name}</a>}
             description={item.clinics}
           />
