@@ -213,7 +213,7 @@ const index = () => {
 
 			<div className={styles.symtomps} style={{minHeight: "150px", marginLeft: "32px"}}>
 				<div className={styles.dep_name}>
-					<h2>Triệu chứng đã chọn</h2>
+					<h2>Triệu chứng đã chọn (Tối đa 3 triệu chứng)</h2>
 				</div>
 				<div className={styles.symtomps} style={{display: "inline-block"}}>
 					{chosen_symtomps}
