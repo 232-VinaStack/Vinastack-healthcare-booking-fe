@@ -40,13 +40,9 @@ export const appointmentSlice = createSlice({
       state.newAppointment = {};
     },
     sendAppointment: (state) => {
-      createAppointment(state.newAppointment)
-        .then((data) => {
-          console.log('Appointment created:', data);
-        })
-        .catch((error) => {
-          console.error('Error creating appointment:', error);
-        });
+      createAppointment(state.newAppointment).then((data) => {
+        console.log('Appointment created:', data);
+      });
     },
   },
 });
