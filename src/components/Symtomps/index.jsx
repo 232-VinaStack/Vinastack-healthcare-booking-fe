@@ -4,12 +4,12 @@ import styles from './symtomps.module.css'
 const index = () => {
   return (
     <div className={styles.root}>
-      <div className='symtomp'>
-        <div>
-          <img src="" alt="" />
+      <div className={styles.symtomp}>
+        <div className={styles.symtomp_image}>
+          <img className={styles.img} src="../src/assets/react.svg" alt="" />
         </div>
-        <div className='description'>
-          descriptions
+        <div className={styles.description}>
+          <p className={styles.p}>Symtomp name</p>
         </div>
       </div>
     </div>
