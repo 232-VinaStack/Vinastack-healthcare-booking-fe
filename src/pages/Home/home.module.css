@@ -115,3 +115,8 @@
     margin: 20px 0 0 12px;
     color: black;
 }
+
+.chosen_sym {
+    display: inline-block;
+    margin: 0 24px 12px 0;
+}

@@ -51,25 +51,50 @@ const index = () => {
 	// var setColor = [];
 	// var symtomp_array = [];
 	// const length = symtomps.length;
+	const [d, setDep] = useState("");
 	const [syms, setSyms] = useState([]);
 
 	// for (var i = 0; i < length; ++i) {
 	// 	[color[i], setColor[i]] = useState("white");
 	// 	symtomp_array[i] = 0;
 	// }
-	const onChoose = (index) => {
-		if (!syms.includes(index)) {
-			setSyms(props => ([...props, index]));
-		} else {
-			const array = [...syms];
-			// console.log({array});
-			const indx = array.indexOf(index);
-			// console.log({indx});
-			if (indx > -1) {
-				array.splice(indx, 1);
+	const onChoose = (dep_id, index) => {
+		if(syms.length < 4) {
+			if(!syms.includes(index)) {
+				if(d == dep_id) {
+					if(syms.length < 3) {
+						setSyms(props => ([...props, index]));
+					}
+					else window.alert("Choose maximum 3 symtomps");
+				}
+				else {
+					if(d != "") {
+						var text = "Can only choose symtomps from one department\nDo you want to change department?";
+						if(confirm(text)) {
+							setDep(dep_id);
+							setSyms([index]);
+						}
+					}
+					else {
+						setDep(dep_id);
+						setSyms([index]);
+					}
+				}
+			} else {
+				const array = [...syms];
+				// console.log({array});
+				const indx = array.indexOf(index);
+				// console.log({indx});
+				if (indx > -1) {
+					array.splice(indx, 1);
+				}
+				setSyms(array);
 			}
-			setSyms(array);
 		}
+		else {
+			window.alert("Choose maximum 3 symtomps");
+		}
+		chooseSyms();
 	}
 	// useEffect(() => {
 	// 	console.log(syms);
@@ -82,10 +107,10 @@ const index = () => {
 	// const data = symtomps.map(({ dep_id, index, img, name }) => {
 	for(var i = 0; i < size; ++i) {
 		data[Object.keys(dep_symtomps)[i]] = dep_symtomps[Object.keys(dep_symtomps)[i]].data.map(({ dep_id, index, img, name }) => {
-			const isChoose = syms.includes(index);
+			const isChoose = syms.includes(index) && syms.length < 4;
 			// console.log(index, isChoose);
 			return (
-				<div onClick={() => onChoose(index)} key={index} props={dep_id} className={styles.symtomps}>
+				<div onClick={() => onChoose(dep_id, index)} key={index} props={dep_id} className={styles.symtomps}>
 	
 					<div style={{ backgroundColor: isChoose? color.choose:color.not_choose }} className={styles.symtomp}>
 						<div className={styles.symtomp_image}>
@@ -118,12 +143,27 @@ const index = () => {
 	});
 
 	// console.log(dep_symtomps)
-	// console.log(syms)
-	// const chosen_symtomps = dep_symtomps.data.map(({id: data}) => {
-	// 	console.log(syms)
-	// });
+	function chooseSyms() {
+		const chosen_symtomps = syms.map((props) => {
+			const s = symtomps[props - 1];
+			return (
+				<div className={styles.chosen_sym}>
+					<div className={styles.symtomp}>
+						<div className={styles.symtomp_image}>
+							<img className={styles.img} src={s.img} alt="" />
+						</div>
+						<div className={styles.description}>
+							<p className={styles.p}>{s.name}</p>
+						</div>
+					</div>
+				</div>
+			);
+		});
+		return chosen_symtomps;
+	}
 	
 	const { Search } = Input;
+	const chosen_symtomps = chooseSyms();
 
 	return (
 		<>
@@ -171,8 +211,13 @@ const index = () => {
 				</div>
 			</div>
 
-			<div className={styles.chosen_symtomps}>
-
+			<div className={styles.symtomps} style={{minHeight: "150px", marginLeft: "32px"}}>
+				<div className={styles.dep_name}>
+					<h2>Triệu chứng đã chọn</h2>
+				</div>
+				<div className={styles.symtomps} style={{display: "inline-block"}}>
+					{chosen_symtomps}
+				</div>
 			</div>
 		</>
 	)
