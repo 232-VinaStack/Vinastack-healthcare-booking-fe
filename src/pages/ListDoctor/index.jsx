@@ -6,9 +6,10 @@ import { Avatar, List, Space, Input } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 import { DateTimePickerModal } from '../../components';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // import doctors from './doctors.json';
-import styles from './listdoctor.module.css'
+import styles from './listdoctor.module.css';
 
 
 const {Search} = Input;
@@ -21,35 +22,11 @@ const IconText = ({ icon, text }) => (
 );
 const ListDoctor = () => {
 	const [open, setOpen] = React.useState(false);
-	const location = useLocation();
-	var dep_id = "all";
-	var dep_name = "All";
-	var doctors;
-	if(location.state) {
-		dep_id = location.state.dep_id;
-		dep_name = location.state.dep_name.name;
-		doctors = location.state.doctors;
-		console.log(doctors)
-	}
-	
-	// const [doctors, setDoctors] = useState(null);
-	// useEffect(() => {
-	// 	// Hàm fetchApiData sử dụng Axios để gửi yêu cầu GET đến API
-	// 	const fetchApiData = async () => {
-	// 		try {
-	// 			const response = await axios.get('http://localhost:8080/doctor');
-	// 			setDoctors(response?.data);
-	// 		} catch (error) {
-	// 			console.error('Error fetching data:', error);
-	// 		}
-	// 	};
-	// 	// Gọi hàm fetchApiData khi component được mount
-	// 	fetchApiData();
-	// }, []); // [] đảm bảo useEffect chỉ chạy một lần khi component được mount
-	
-	// setData(doctors)
+	const dep_id = useSelector((state) => state.doctor.dep_id);
+	const dep_name = useSelector((state) => state.doctor.dep_name);
+	const doctors = useSelector((state) => state.doctor.doctor);
 
-	if (dep_id == "all" || !doctors || doctors.length == 0) {
+	if (!doctors || doctors.length == 0) {
 		return (
 			<div className={styles.nodoctor}>
 				<p>Hiện tại không có bác sĩ phù hợp</p>
@@ -80,7 +57,6 @@ const ListDoctor = () => {
 			</div>
 		);
 	});
-	console.log()
 
 	return (
 		<div>
@@ -110,7 +86,6 @@ const ListDoctor = () => {
 				}}
 				dataSource={doctors}
 				grid={{
-					column: 3,
 					gutter: 24
 				}}
 				renderItem={(item) => (
@@ -142,7 +117,7 @@ const ListDoctor = () => {
 											key="list-vertical-environment-o"
 										/>
 									</div>
-								</div>,
+								</div>
 								<div className={styles.control}>
 									<div className={styles.buttons}>
 										<Button
@@ -151,7 +126,7 @@ const ListDoctor = () => {
 												<Link
 													to={{
 														pathname: `/doctor-detail`,
-														search: `=${item.name}`
+														search: `id=${item.id}`
 													}}
 													state={{item, dep_id}}
 												>

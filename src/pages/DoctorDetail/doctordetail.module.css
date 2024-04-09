@@ -62,7 +62,7 @@ h3 {
 
 .inf {
     display: grid;
-    grid: 100% / auto auto auto;
+    grid: 100% / auto auto;
 }
 
 .checked {
