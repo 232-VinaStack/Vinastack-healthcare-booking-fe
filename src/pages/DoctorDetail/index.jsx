@@ -5,7 +5,7 @@ import { Avatar, List, Space, Input, Button } from 'antd';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './doctordetail.module.css';
-import doctor from './doctor.json';
+import doctor_schedule from './doctor.json';
 import department from './department.json';
 
 
@@ -31,8 +31,8 @@ const ViewDoctorDetail = () => {
             </>
         );
     }
-    var dep_name = "";
-    for(var i = 0; i < department.length; ++i) {
+    let dep_name = "";
+    for(let i = 0; i < department.length; ++i) {
         if(department[i].id == state.dep_id) dep_name = department[i].department;
     }
 
@@ -40,9 +40,9 @@ const ViewDoctorDetail = () => {
         (
             async () => {
                 try {
-                    const response = await getDoctor();
-                    // setData(response);
-                    setData([state.item])
+                    const response = await getDoctor("http://localhost:8080/doctor");
+                    setData([response[state.item.id - 1]]);
+                    // setData([state.item])
                 } catch (err) {
                     console.log('Error occured when fetching books');
                 }
@@ -51,7 +51,8 @@ const ViewDoctorDetail = () => {
 	}, []);
     
     if(data.length) {
-        console.log(data[0])
+        const doctor = data[0];
+        const schedule = doctor_schedule[0];
         return (
             <div>
                 <div className={styles.doctor_overview}>
@@ -59,10 +60,10 @@ const ViewDoctorDetail = () => {
                         <div className={styles.head}>
                             <h2>Overview</h2>
                             <div className={styles.mr}>
-                                <p>Tên: {data[0].name}</p>
+                                <p>Tên: {doctor.name}</p>
                                 <p>Tuổi: {doctor.age}</p>
-                                <p>Học vấn: Tốt nghiệp {data[0].education}</p>
-                                <p>Kinh nghiệm: {data[0].expYear} năm trong {dep_name}</p>
+                                <p>Học vấn: Tốt nghiệp {doctor.education}</p>
+                                <p>Kinh nghiệm: {doctor.expYear} năm trong {dep_name}</p>
                                 <p>
                                     Tôi cam kết sẽ chữa dứt bệnh, quý khách hàng cứ yên tâm. <br />
                                     Sức khỏe của bạn là nhiệm vụ của tôi.
@@ -71,7 +72,7 @@ const ViewDoctorDetail = () => {
                         </div>
                     </div>
                     <div className={styles.img}>
-                        <img src={data[0].avatarLink} alt={data[0].name} />
+                        <img src={doctor.avatarLink} alt={doctor.name} />
                     </div>
                 </div>
                 <div className={styles.detail}>
@@ -84,7 +85,7 @@ const ViewDoctorDetail = () => {
                             </div>
                             <div className={styles.text}>
                                 <p>{dep_name}</p>
-                                <p>{data[0].expYear} năm kinh nghiệm</p>
+                                <p>{doctor.expYear} năm kinh nghiệm</p>
                             </div>
                         </div>
                     </div>
@@ -103,13 +104,13 @@ const ViewDoctorDetail = () => {
                             <div className={styles.time + " " + styles.mtop8}>
                                 <h3>Thời gian làm việc</h3>
                                 <ul>
-                                    <li><p>{doctor[0].schedule[0].date}: {doctor[0].schedule[0].start} - {doctor[0].schedule[0].end}</p></li>
-                                    <li><p>{doctor[0].schedule[1].date}: {doctor[0].schedule[1].start} - {doctor[0].schedule[1].end}</p></li>
-                                    <li><p>{doctor[0].schedule[2].date}: {doctor[0].schedule[2].start} - {doctor[0].schedule[2].end}</p></li>
-                                    <li><p>{doctor[0].schedule[3].date}: {doctor[0].schedule[3].start} - {doctor[0].schedule[3].end}</p></li>
-                                    <li><p>{doctor[0].schedule[4].date}: {doctor[0].schedule[4].start} - {doctor[0].schedule[4].end}</p></li>
-                                    <li><p>{doctor[0].schedule[5].date}: {doctor[0].schedule[5].start} - {doctor[0].schedule[5].end}</p></li>
-                                    <li><p>{doctor[0].schedule[6].date}: {doctor[0].schedule[6].start} - {doctor[0].schedule[6].end}</p></li>
+                                    <li><p>{schedule.schedule[0].date}: {schedule.schedule[0].start} - {schedule.schedule[0].end}</p></li>
+                                    <li><p>{schedule.schedule[1].date}: {schedule.schedule[1].start} - {schedule.schedule[1].end}</p></li>
+                                    <li><p>{schedule.schedule[2].date}: {schedule.schedule[2].start} - {schedule.schedule[2].end}</p></li>
+                                    <li><p>{schedule.schedule[3].date}: {schedule.schedule[3].start} - {schedule.schedule[3].end}</p></li>
+                                    <li><p>{schedule.schedule[4].date}: {schedule.schedule[4].start} - {schedule.schedule[4].end}</p></li>
+                                    <li><p>{schedule.schedule[5].date}: {schedule.schedule[5].start} - {schedule.schedule[5].end}</p></li>
+                                    <li><p>{schedule.schedule[6].date}: {schedule.schedule[6].start} - {schedule.schedule[6].end}</p></li>
                                 </ul>
                             </div>
                         </div>
@@ -117,8 +118,8 @@ const ViewDoctorDetail = () => {
                     <div className={styles.working + " " + styles.mtop24}>
                         <h2>Nơi công tác</h2>
                         <div className={styles.mr}>
-                            <p>Làm việc tại {data[0].clinics}</p>
-                            <p>Giảng viên tại {data[0].education}</p>
+                            <p>Làm việc tại {doctor.clinics}</p>
+                            <p>Giảng viên tại {doctor.education}</p>
                         </div>
                     </div>
                 </div>
