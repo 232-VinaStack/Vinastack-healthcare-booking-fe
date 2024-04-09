@@ -46,6 +46,61 @@ export const AppointmentBooking = () => {
         description:
           'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       },
+      {
+        id: 3,
+        image:
+          'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelfHx8fGVufDB8fHx8fA%3D%3D',
+        name: 'Dr. Jane Doe',
+        specialty: 'Dermatologist',
+        hospital: 'City Hospital',
+        date: new Date(2023, 11, 16, 14, 0),
+        description:
+          'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      },
+      {
+        id: 4,
+        image:
+          'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelfHx8fGVufDB8fHx8fA%3D%3D',
+        name: 'Dr. Jane Doe',
+        specialty: 'Dermatologist',
+        hospital: 'City Hospital',
+        date: new Date(2023, 11, 16, 14, 0),
+        description:
+          'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      },
+      {
+        id: 5,
+        image:
+          'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelfHx8fGVufDB8fHx8fA%3D%3D',
+        name: 'Dr. Jane Doe',
+        specialty: 'Dermatologist',
+        hospital: 'City Hospital',
+        date: new Date(2023, 11, 16, 14, 0),
+        description:
+          'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      },
+      {
+        id: 6,
+        image:
+          'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelfHx8fGVufDB8fHx8fA%3D%3D',
+        name: 'Dr. Jane Doe',
+        specialty: 'Dermatologist',
+        hospital: 'City Hospital',
+        date: new Date(2023, 11, 16, 14, 0),
+        description:
+          'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      },
+      {
+        id: 7,
+        image:
+          'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelfHx8fGVufDB8fHx8fA%3D%3D',
+        name: 'Dr. Jane Doe',
+        specialty: 'Dermatologist',
+        hospital: 'City Hospital',
+        date: new Date(2023, 11, 16, 14, 0),
+        description:
+          'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      },
     ];
     setAppointments(appointments_data);
   }, []);
