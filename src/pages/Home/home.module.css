@@ -23,9 +23,9 @@
 }
 
 .buttons {
-    width: 100%;
     display: flex;
     justify-content: flex-start;
+    width: 100%;
 }
 .button {
     border-radius: 0px;
@@ -59,7 +59,7 @@
 
 
 .wrapper {
-    margin: 32px;
+    margin: 32px 32px 120px 32px;
 }
 
 .root {
@@ -70,12 +70,13 @@
     justify-content: space-between;
 }
 
-.symtomps {
+.symptoms {
     margin: 12px;
     cursor: pointer;
+    display: inline-block;
 }
 
-.symtomp {
+.symptom {
     width: 282px;
     height: 82px;
     border: 1px solid black;
@@ -83,7 +84,7 @@
     display: flex;
 }
 
-.symtomp_image {
+.symptom_image {
     box-sizing: content-box;
     height: auto;
     max-width: 30%;
@@ -100,15 +101,13 @@
     margin: 16px 8px;
     width: 70%;
     height: auto;
+    position: relative;
 }
 
 .p {
-    vertical-align: middle;
-    line-height: 3.5;
-}
-
-.button {
-    float: right;
+    position: absolute;
+    top: 50%; left: 0;
+    transform: translate(0, -50%);
 }
 
 .dep_name {
@@ -117,6 +116,21 @@
 }
 
 .chosen_sym {
-    display: inline-block;
-    margin: 0 24px 12px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 160px;
+    background-color: white;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-top: 1px solid black;
+}
+
+.confirm {
+    margin: 12px 92px 0 0;
+    position: absolute;
+    top: 0; right: 0;
+    border-radius: 0px;
 }

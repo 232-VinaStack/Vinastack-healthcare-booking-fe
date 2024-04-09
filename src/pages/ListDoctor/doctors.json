@@ -1,0 +1,58 @@
+[
+    {
+        "id": 0,
+        "name": "Nguyễn Văn A",
+        "avatarLink": "https://thumbs.dreamstime.com/b/portrait-happy-arabic-doctor-male-blue-background-square-smiling-to-camera-wearing-white-uniform-posing-headshot-cheerful-233544543.jpg",
+        "expYear": 5,
+        "education": "Đại học Y dược HCM",
+        "clinics": ["Bệnh viện A"]
+    },
+    {
+        "id": 1,
+        "name": "Bob Johnson",
+        "avatarLink": "https://media.istockphoto.com/id/1340883379/photo/young-doctor-hospital-medical-medicine-health-care-clinic-office-portrait-glasses-man.jpg?s=612x612&w=0&k=20&c=_H4VUPBkS0gEj5ZdZzQo-Hw3lMuyofJpB-P9yS92Wyw=",
+        "expYear": 10,
+        "education": "Doctor of Philosophy in Physics",
+        "clinics": ["Bệnh viện B"]
+    },
+    {
+        "id": 2,
+        "name": "Charlie Garcia",
+        "avatarLink": "https://thumbs.dreamstime.com/b/doctor-square-18545494.jpg",
+        "expYear": 7,
+        "education": "Bachelor of Science in Engineering",
+        "clinics": ["Bệnh viện C"]
+    },
+    {
+        "id": 3,
+        "name": "Charlie Garcia",
+        "avatarLink": "https://thumbs.dreamstime.com/b/doctor-square-18545494.jpg",
+        "expYear": 7,
+        "education": "Bachelor of Science in Engineering",
+        "clinics": ["Bệnh viện C"]
+    },
+    {
+        "id": 4,
+        "name": "Charlie Garcia",
+        "avatarLink": "https://thumbs.dreamstime.com/b/doctor-square-18545494.jpg",
+        "expYear": 7,
+        "education": "Bachelor of Science in Engineering",
+        "clinics": ["Bệnh viện C"]
+    },
+    {
+        "id": 5,
+        "name": "Charlie Garcia",
+        "avatarLink": "https://thumbs.dreamstime.com/b/doctor-square-18545494.jpg",
+        "expYear": 7,
+        "education": "Bachelor of Science in Engineering",
+        "clinics": ["Bệnh viện C"]
+    },
+    {
+        "id": 6,
+        "name": "Charlie Garcia",
+        "avatarLink": "https://thumbs.dreamstime.com/b/doctor-square-18545494.jpg",
+        "expYear": 7,
+        "education": "Bachelor of Science in Engineering",
+        "clinics": ["Bệnh viện C"]
+    }
+]

@@ -1,46 +1,41 @@
 import React, { useEffect } from 'react'
 import styles from './home.module.css'
-import { Inputs, Modal, ToolTip, Symtomps } from '@/components'
+import { Inputs, Modal, ToolTip } from '@/components'
 import { Header, Footer, Navbar } from '@/layout'
 import { Button } from "antd";
 import { useState } from 'react';
 import { Input, Space } from 'antd';
+import axios from 'axios';
+import dep from './department.json';
+import symptoms from './symptoms.json';
+import { Link, useLocation } from 'react-router-dom';
 
-const dep = [
-	{id: "d1", department: "Khoa tim mạch"},
-	{id: "d2", department: "Khoa tai mũi họng"},
-]
-
-const symtomps = [
-	{dep_id: "d1", index: 1, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Fever" },
-	{dep_id: "d1", index: 2, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Block nose" },
-	{dep_id: "d1", index: 3, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Cough" },
-	{dep_id: "d1", index: 4, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Runny nose" },
-	{dep_id: "d1", index: 5, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Throat pain" },
-	{dep_id: "d1", index: 6, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Headache" },
-	{dep_id: "d1", index: 7, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Loose motion" },
-	{dep_id: "d1", index: 8, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Constipation" },
-	{dep_id: "d2", index: 9, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Gas" },
-	{dep_id: "d2", index: 10, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Vomiting/Nausea" },
-	{dep_id: "d2", index: 11, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "High Cholesterol" },
-	{dep_id: "d2", index: 12, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Diabetes" },
-	{dep_id: "d2", index: 13, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "High BP" },
-	{dep_id: "d2", index: 14, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Low BP" },
-	{dep_id: "d2", index: 15, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Migraine" },
-	{dep_id: "d2", index: 16, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Back Pain" },
-	{dep_id: "d2", index: 17, img: "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png", name: "Take a second opinion" },
-];
-
-const combine_syms = (dep, symtomps) => {
-	const dep_symtomps = {};
+const combine_syms = (dep, symptoms) => {
+	const dep_symptoms = {};
 	for (var i = 0; i < dep.length; ++i) {
-		// dep_symtomps.push({[dep[i].id]: {name: dep[i].department, data: []}});
-		dep_symtomps[dep[i].id] = {name: dep[i].department, data: []};
+		// dep_symptoms.push({[dep[i].id]: {name: dep[i].department, data: []}});
+		dep_symptoms[dep[i].id] = {name: dep[i].department, data: []};
 	}
-	for (var i = 0; i < symtomps.length; ++i) {
-		dep_symtomps[symtomps[i].dep_id].data.push(symtomps[i]);
+	for (var i = 0; i < symptoms.length; ++i) {
+		dep_symptoms[symptoms[i].dep_id].data.push(symptoms[i]);
 	}
-	return dep_symtomps;
+	return dep_symptoms;
+}
+
+const queryDoctor = async (dep_id) => {
+	console.log(dep_id);
+	var doctors;
+	try {
+		doctors = await axios({
+			method: 'get',
+			url: 'http://localhost:8080/doctor',
+			data: {dep_id}
+		});
+	}
+	catch (error) {
+		console.log("Error when fetching data: ", err);
+	}
+	return doctors.data;
 }
 
 const index = () => {
@@ -49,14 +44,14 @@ const index = () => {
 		not_choose: "#fff"
 	};
 	// var setColor = [];
-	// var symtomp_array = [];
-	// const length = symtomps.length;
-	const [d, setDep] = useState("");
+	// var symptom_array = [];
+	// const length = symptoms.length;
+	const [d, setDep] = useState("all");
 	const [syms, setSyms] = useState([]);
 
 	// for (var i = 0; i < length; ++i) {
 	// 	[color[i], setColor[i]] = useState("white");
-	// 	symtomp_array[i] = 0;
+	// 	symptom_array[i] = 0;
 	// }
 	const onChoose = (dep_id, index) => {
 		if(syms.length < 4) {
@@ -65,11 +60,11 @@ const index = () => {
 					if(syms.length < 3) {
 						setSyms(props => ([...props, index]));
 					}
-					else window.alert("Choose maximum 3 symtomps");
+					else window.alert("Choose maximum 3 symptoms");
 				}
 				else {
-					if(d != "") {
-						var text = "Can only choose symtomps from one department\nDo you want to change department?";
+					if(d != "all") {
+						var text = "Can only choose symptoms from one department\nDo you want to change department?";
 						if(confirm(text)) {
 							setDep(dep_id);
 							setSyms([index]);
@@ -92,7 +87,7 @@ const index = () => {
 			}
 		}
 		else {
-			window.alert("Choose maximum 3 symtomps");
+			window.alert("Choose maximum 3 symptoms");
 		}
 		chooseSyms();
 	}
@@ -100,20 +95,20 @@ const index = () => {
 	// 	console.log(syms);
 	// }, [syms])
 
-	var dep_symtomps = combine_syms(dep, symtomps);
+	var dep_symptoms = combine_syms(dep, symptoms);
 	const data = [];
-	var size = Object.keys(dep_symtomps).length;
+	var size = Object.keys(dep_symptoms).length;
 	
-	// const data = symtomps.map(({ dep_id, index, img, name }) => {
+	// const data = symptoms.map(({ dep_id, index, img, name }) => {
 	for(var i = 0; i < size; ++i) {
-		data[Object.keys(dep_symtomps)[i]] = dep_symtomps[Object.keys(dep_symtomps)[i]].data.map(({ dep_id, index, img, name }) => {
+		data[Object.keys(dep_symptoms)[i]] = dep_symptoms[Object.keys(dep_symptoms)[i]].data.map(({ dep_id, index, name, img}) => {
 			const isChoose = syms.includes(index) && syms.length < 4;
 			// console.log(index, isChoose);
 			return (
-				<div onClick={() => onChoose(dep_id, index)} key={index} props={dep_id} className={styles.symtomps}>
+				<div onClick={() => onChoose(dep_id, index)} key={index} props={dep_id} className={styles.symptoms}>
 	
-					<div style={{ backgroundColor: isChoose? color.choose:color.not_choose }} className={styles.symtomp}>
-						<div className={styles.symtomp_image}>
+					<div style={{ backgroundColor: isChoose? color.choose:color.not_choose }} className={styles.symptom}>
+						<div className={styles.symptom_image}>
 							<img className={styles.img} src={img} alt="" />
 						</div>
 						<div className={styles.description}>
@@ -142,14 +137,14 @@ const index = () => {
 		)
 	});
 
-	// console.log(dep_symtomps)
+	// console.log(dep_symptoms)
 	function chooseSyms() {
-		const chosen_symtomps = syms.map((props) => {
-			const s = symtomps[props - 1];
+		const chosen_symptoms = syms.map((props) => {
+			const s = symptoms[props - 1];
 			return (
-				<div className={styles.chosen_sym}>
-					<div className={styles.symtomp}>
-						<div className={styles.symtomp_image}>
+				<div className={styles.symptoms} key={s.index}>
+					<div className={styles.symptom}>
+						<div className={styles.symptom_image}>
 							<img className={styles.img} src={s.img} alt="" />
 						</div>
 						<div className={styles.description}>
@@ -159,15 +154,16 @@ const index = () => {
 				</div>
 			);
 		});
-		return chosen_symtomps;
+		return chosen_symptoms;
 	}
 	
 	const { Search } = Input;
-	const chosen_symtomps = chooseSyms();
+	const chosen_symptoms = chooseSyms();
+	const [result, setResult] = useState([]);
 
 	return (
 		<>
-			<div className={styles.head}>
+			<div className={styles.head} style={{position: "relative"}}>
 				<div className={styles.side}>
 					<div className={styles.title}>
 						<h1>
@@ -206,17 +202,31 @@ const index = () => {
 				<div className={styles.root}>
 					{data_render}
 				</div>
-				<div className={styles.button}>
-					<Button type='primary'>Xác nhận</Button>
-				</div>
 			</div>
 
-			<div className={styles.symtomps} style={{minHeight: "150px", marginLeft: "32px"}}>
-				<div className={styles.dep_name}>
-					<h2>Triệu chứng đã chọn (Tối đa 3 triệu chứng)</h2>
+			<div className={styles.chosen_sym}>
+				<div className={styles.content} style={{marginLeft: "100px"}}>
+					<div className={styles.dep_name}>
+						<h2>Triệu chứng đã chọn (Tối đa 3 triệu chứng)</h2>
+					</div>
+					<div className={styles.symptoms_wrap}>
+						{chosen_symptoms}
+					</div>
 				</div>
-				<div className={styles.symtomps} style={{display: "inline-block"}}>
-					{chosen_symtomps}
+				<div className={styles.confirm}>
+					<Button className={styles.button} type='primary'>
+						<Link
+							onClick={async () => {
+								var result = await queryDoctor(d);
+								setResult(result);
+							}}
+							to={{
+								pathname: `/list-doctor`,
+								search: `dep=${d}`
+							}}
+							state={{dep_id: d, dep_name: dep_symptoms[d], doctors: result}}
+						>Xác nhận</Link>
+					</Button>
 				</div>
 			</div>
 		</>
