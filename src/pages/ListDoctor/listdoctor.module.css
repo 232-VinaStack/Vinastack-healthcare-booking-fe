@@ -26,8 +26,8 @@
     flex-direction: column;
     border-radius: 8px;
     border: 1px solid black;
-    width: 380px;
-    height: 190px;
+    width: 400px;
+    height: 210px;
     justify-content: space-between;
     padding: 12px 0 12px 12px;
 }

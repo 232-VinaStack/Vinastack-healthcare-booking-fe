@@ -8,70 +8,51 @@ import { Input, Space } from 'antd';
 import axios from 'axios';
 import dep from './department.json';
 import symptoms from './symptoms.json';
-import { Link, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { getDoctor, getDepId, getDepName } from '@/redux/slices/doctorSlice';
+import { getSymptoms } from '@/redux/slices/symtomsSlice';
 
 const combine_syms = (dep, symptoms) => {
 	const dep_symptoms = {};
-	for (var i = 0; i < dep.length; ++i) {
+	for (let i = 0; i < dep.length; ++i) {
 		// dep_symptoms.push({[dep[i].id]: {name: dep[i].department, data: []}});
-		dep_symptoms[dep[i].id] = {name: dep[i].department, data: []};
+		dep_symptoms[dep[i].id] = { name: dep[i].department, data: [] };
 	}
-	for (var i = 0; i < symptoms.length; ++i) {
+	for (let i = 0; i < symptoms.length; ++i) {
 		dep_symptoms[symptoms[i].dep_id].data.push(symptoms[i]);
 	}
 	return dep_symptoms;
 }
 
-const queryDoctor = async (dep_id) => {
-	console.log(dep_id);
-	var doctors;
-	try {
-		doctors = await axios({
-			method: 'get',
-			url: 'http://localhost:8080/doctor',
-			data: {dep_id}
-		});
-	}
-	catch (error) {
-		console.log("Error when fetching data: ", err);
-	}
-	return doctors.data;
-}
 
+const color = {
+	choose: "#d9d9d9",
+	not_choose: "#fff"
+};
 const index = () => {
-	var color = {
-		choose: "#d9d9d9",
-		not_choose: "#fff"
-	};
-	// var setColor = [];
-	// var symptom_array = [];
-	// const length = symptoms.length;
-	const [d, setDep] = useState("all");
+	const [idVariable, setIdVariable] = useState("all");
 	const [syms, setSyms] = useState([]);
-
-	// for (var i = 0; i < length; ++i) {
-	// 	[color[i], setColor[i]] = useState("white");
-	// 	symptom_array[i] = 0;
-	// }
+	const dispatch = useDispatch();
 	const onChoose = (dep_id, index) => {
-		if(syms.length < 4) {
-			if(!syms.includes(index)) {
-				if(d == dep_id) {
-					if(syms.length < 3) {
+		if (syms.length < 4) {
+			if (!syms.includes(index)) {
+				if (idVariable == dep_id) {
+					if (syms.length < 3) {
 						setSyms(props => ([...props, index]));
 					}
 					else window.alert("Choose maximum 3 symptoms");
 				}
 				else {
-					if(d != "all") {
+					if (idVariable != "all") {
 						var text = "Can only choose symptoms from one department\nDo you want to change department?";
-						if(confirm(text)) {
-							setDep(dep_id);
+						if (confirm(text)) {
+							setIdVariable(dep_id);
 							setSyms([index]);
 						}
 					}
 					else {
-						setDep(dep_id);
+						setIdVariable(dep_id);
 						setSyms([index]);
 					}
 				}
@@ -91,23 +72,50 @@ const index = () => {
 		}
 		chooseSyms();
 	}
-	// useEffect(() => {
-	// 	console.log(syms);
-	// }, [syms])
-
-	var dep_symptoms = combine_syms(dep, symptoms);
+	let dep_symptoms = combine_syms(dep, symptoms);
 	const data = [];
-	var size = Object.keys(dep_symptoms).length;
-	
+	const navigate = useNavigate(); // Use useNavigate hook
+
+	const getSymptomsName = () => {
+		const fitler_syms = symptoms.filter((item) => syms.indexOf(item.index) > -1);
+		const result = fitler_syms.reduce((res, item) => {
+			res.push(item.name);
+			return res;
+		}, []);
+		return result;
+	}
+
+	const queryDoctor = async () => {
+		try {
+			const response = await axios({
+				method: 'get',
+				url: 'http://localhost:8080/doctor',
+				data: { idVariable }
+			});
+			if (response?.data) {
+				dispatch(getDoctor(response?.data));
+				dispatch(getDepId(idVariable));
+				dispatch(getDepName(dep_symptoms[idVariable].name));
+				dispatch(getSymptoms(getSymptomsName()));
+				return navigate(`/list-doctor`);
+			}
+
+		}
+		catch (error) {
+			console.log("Error when fetching data: ", error);
+		}
+	}
+	let size = Object.keys(dep_symptoms).length;
+
 	// const data = symptoms.map(({ dep_id, index, img, name }) => {
-	for(var i = 0; i < size; ++i) {
-		data[Object.keys(dep_symptoms)[i]] = dep_symptoms[Object.keys(dep_symptoms)[i]].data.map(({ dep_id, index, name, img}) => {
+	for (let i = 0; i < size; ++i) {
+		data[Object.keys(dep_symptoms)[i]] = dep_symptoms[Object.keys(dep_symptoms)[i]].data.map(({ dep_id, index, name, img }) => {
 			const isChoose = syms.includes(index) && syms.length < 4;
 			// console.log(index, isChoose);
 			return (
 				<div onClick={() => onChoose(dep_id, index)} key={index} props={dep_id} className={styles.symptoms}>
-	
-					<div style={{ backgroundColor: isChoose? color.choose:color.not_choose }} className={styles.symptom}>
+
+					<div style={{ backgroundColor: isChoose ? color.choose : color.not_choose }} className={styles.symptom}>
 						<div className={styles.symptom_image}>
 							<img className={styles.img} src={img} alt="" />
 						</div>
@@ -119,8 +127,8 @@ const index = () => {
 			)
 		});
 	}
-	
-	const data_render = dep.map(({id, department}) => {
+
+	const data_render = dep.map(({ id, department }) => {
 		return (
 			<div key={id}>
 				<div className={styles.root}>
@@ -156,26 +164,26 @@ const index = () => {
 		});
 		return chosen_symptoms;
 	}
-	
+
 	const { Search } = Input;
 	const chosen_symptoms = chooseSyms();
-	const [result, setResult] = useState([]);
+
 
 	return (
 		<>
-			<div className={styles.head} style={{position: "relative"}}>
+			<div className={styles.head} style={{ position: "relative" }}>
 				<div className={styles.side}>
 					<div className={styles.title}>
 						<h1>
 							Đặt lịch hẹn với bác sĩ nhanh chóng dễ dàng
 						</h1>
-						<p style={{margin: "16px 0"}}>
+						<p style={{ margin: "16px 0" }}>
 							Chỉ với 3 bước thuận tiện
 						</p>
 					</div>
 					<div className={styles.buttons}>
 						<Button className={styles.button} type='primary'>Đặt lịch hẹn ngay</Button>
-						<Button className={styles.button} style={{margin: "0 16px 0"}}>Xem bác sĩ</Button>
+						<Button className={styles.button} style={{ margin: "0 16px 0" }}>Xem bác sĩ</Button>
 					</div>
 				</div>
 				<div className={styles.side}>
@@ -186,15 +194,15 @@ const index = () => {
 			</div>
 
 			<div className={styles.choose}>
-				<h1 style={{margin: "0 0 12px 0"}}>Chọn triệu chứng</h1>
+				<h1 style={{ margin: "0 0 12px 0" }}>Chọn triệu chứng</h1>
 				<form>
-				<Search
-					placeholder="Tìm triệu chứng"
-					allowClear
-					// onSearch={onSearch}
-					style={{
-						width: 200,
-				}} />
+					<Search
+						placeholder="Tìm triệu chứng"
+						allowClear
+						// onSearch={onSearch}
+						style={{
+							width: 200,
+						}} />
 				</form>
 			</div>
 
@@ -205,7 +213,7 @@ const index = () => {
 			</div>
 
 			<div className={styles.chosen_sym}>
-				<div className={styles.content} style={{marginLeft: "100px"}}>
+				<div className={styles.content} style={{ marginLeft: "100px" }}>
 					<div className={styles.dep_name}>
 						<h2>Triệu chứng đã chọn (Tối đa 3 triệu chứng)</h2>
 					</div>
@@ -214,18 +222,8 @@ const index = () => {
 					</div>
 				</div>
 				<div className={styles.confirm}>
-					<Button className={styles.button} type='primary'>
-						<Link
-							onClick={async () => {
-								var result = await queryDoctor(d);
-								setResult(result);
-							}}
-							to={{
-								pathname: `/list-doctor`,
-								search: `dep=${d}`
-							}}
-							state={{dep_id: d, dep_name: dep_symptoms[d], doctors: result}}
-						>Xác nhận</Link>
+					<Button className={styles.button} type='primary' onClick={queryDoctor}>
+						Xác nhận
 					</Button>
 				</div>
 			</div>
