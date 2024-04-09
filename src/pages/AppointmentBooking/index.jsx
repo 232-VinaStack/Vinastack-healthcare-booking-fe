@@ -9,9 +9,33 @@ import React, { useState, useEffect } from 'react';
 import { Pagination } from 'react-bootstrap';
 
 export const AppointmentBooking = () => {
+  const appointments_data = [
+    {
+      id: 1,
+      image:
+        'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      name: 'Dr. John Smith',
+      specialty: 'Cardiologist',
+      hospital: 'Central Hospital',
+      date: new Date(2023, 11, 15, 10, 0),
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    },
+    {
+      id: 2,
+      image:
+        'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      name: 'Dr. Jane Doe',
+      specialty: 'Dermatologist',
+      hospital: 'City Hospital',
+      date: new Date(2023, 11, 16, 14, 0),
+      description:
+        'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    },
+  ];
+
   const [active, setActive] = useState(1);
   const items = [];
-  const totalAppointments = 23; // Tổng số AppointmentCard
+  const totalAppointments = 2; // Tổng số AppointmentCard
   const appointmentsPerPage = 6; // Số lượng AppointmentCard trên mỗi trang
   const [appointments, setAppointments] = useState([]);
 
@@ -55,10 +79,10 @@ export const AppointmentBooking = () => {
     );
     const appointmentsToShow = appointments.slice(startIndex, endIndex); // Slice the appointments for the current page
 
-    return appointmentsToShow.map((appointment, index) => (
+    return appointmentsToShow.map((appointments_data, index) => (
       <div className="col-lg-4 col-md-6 col-sm-12" key={index}>
         <AppointmentCard
-          appointment={appointment}
+          appointment={appointments_data}
           index={index}
           onDelete={handleDeleteAppointment}
         />{' '}
@@ -94,19 +118,21 @@ export const AppointmentBooking = () => {
                 height: '109px',
                 objectFit: 'cover',
               }}
-              src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src={appointments_data[index].image}
             />
             <div className="col-8 p-3">
-              <div className="fw-bold fs-3">Dr. James Robinson</div>
+              <div className="fw-bold fs-3">
+                {appointments_data[index].name}
+              </div>
               <div
                 className="fs-3 fw-semibold my-2"
                 style={{ color: 'rgb(125, 125, 125)' }}
               >
-                Chuyên khoa: da liễu
+                {appointments_data[index].specialty}
               </div>
               <div style={{ color: '#4B5563' }} className="fw-medium fs-4">
                 <FontAwesomeIcon className="me-3" icon={faMapMarkerAlt} />
-                Bệnh viện Từ Dũ
+                {appointments_data[index].hospital}
               </div>
             </div>
           </div>
