@@ -1,0 +1,19 @@
+.divider {
+  border-bottom: 1.5px solid rgb(230, 225, 225);
+}
+
+.customButton {
+  background-color: black;
+  width: 147px;
+  height: 37px;
+  border-radius: 20px;
+  border: none;
+  font-size: medium;
+}
+.customButton:hover {
+  background-color: #4d4c4c; /* Màu nền của nút khi hover */
+}
+
+.AppointmentCard:last-child {
+  margin-right: auto;
+}
