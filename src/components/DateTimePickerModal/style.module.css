@@ -2,6 +2,32 @@
   display: flex;
   flex-direction: column;
   background-color: white;
-  justify-content: center;
-  align-items: center;
+  gap: 1rem;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.text {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.88);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  margin-bottom: 1rem;
+}
+
+.active {
+  background-color: black;
+  color: white;
+  border: 0;
+  border-radius: 1rem;
+  padding: 0.8rem 1.2rem;
+}
+
+.inactive {
+  background-color: #F9FAFB;
+  border: 0;
+  border-radius: 1rem;
+  padding: 0.8rem 1.2rem;
 }
