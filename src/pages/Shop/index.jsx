@@ -1,12 +1,8 @@
-import React from 'react'
-import styles from './shop.module.css'
+import React from 'react';
+import styles from './shop.module.css';
 
 const index = () => {
-  return (
-    <div>
-      Shop
-    </div>
-  )
-}
+  return <div>Shop</div>;
+};
 
-export default index
+export default index;
