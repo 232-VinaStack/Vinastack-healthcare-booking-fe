@@ -116,9 +116,7 @@ export const AppointmentBooking = () => {
               src={appointment.image}
             />
             <div className="col-8 p-3">
-              <div className="fw-bold fs-3">
-                {appointment.name}
-              </div>
+              <div className="fw-bold fs-3">{appointment.name}</div>
               <div
                 className="fs-3 fw-semibold my-2"
                 style={{ color: 'rgb(125, 125, 125)' }}
