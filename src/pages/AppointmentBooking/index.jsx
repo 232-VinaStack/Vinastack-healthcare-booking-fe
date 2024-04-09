@@ -11,16 +11,16 @@ import { Pagination } from 'react-bootstrap';
 export const AppointmentBooking = () => {
   const [active, setActive] = useState(1);
   const items = [];
-  const totalAppointments = 2; // Tổng số AppointmentCard
+  const totalAppointments = 7; // Tổng số AppointmentCard
   const appointmentsPerPage = 6; // Số lượng AppointmentCard trên mỗi trang
   const [appointments, setAppointments] = useState([]);
 
-  const handleDeleteAppointment = (index) => {
+  const handleDeleteAppointment = (id) => {
     // Update the appointments state with a new array excluding the deleted appointment
     setAppointments((prevAppointments) =>
-      prevAppointments.filter((appointment, i) => i !== index)
+      prevAppointments.filter((appointment) => appointment.id !== id)
     );
-    alert(index);
+    alert(id);
   };
 
   useEffect(() => {
@@ -188,7 +188,7 @@ export const AppointmentBooking = () => {
           <div className="text-center">
             <Button
               className={`${style.customButton} fw-bold text-light`}
-              onClick={() => onDelete(index)} // Call the onDelete function passed as a prop
+              onClick={() => onDelete(appointment.id)} // Call the onDelete function passed as a prop
             >
               Xóa lịch hẹn
             </Button>
