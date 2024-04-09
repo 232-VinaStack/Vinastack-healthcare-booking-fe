@@ -15,9 +15,21 @@ export const AppointmentBooking = () => {
   const appointmentsPerPage = 6; // Số lượng AppointmentCard trên mỗi trang
   const [appointments, setAppointments] = useState([]);
 
+  const handleDeleteAppointment = (index) => {
+    // Update the appointments state with a new array excluding the deleted appointment
+    setAppointments((prevAppointments) =>
+      prevAppointments.filter((appointment, i) => i !== index)
+    );
+  };
+
   useEffect(() => {
-    setAppointments(displayAppointments());
-  }, [active]);
+    // Simulate fetching appointments (replace with your actual data fetching logic)
+    setAppointments(
+      Array.from({ length: totalAppointments }).map((_, i) => ({
+        // ... appointment data for each appointment
+      }))
+    );
+  }, []); // Empty dependency array to fetch appointments only once on initial render
 
   for (
     let number = 1;
@@ -37,21 +49,27 @@ export const AppointmentBooking = () => {
 
   const displayAppointments = () => {
     const startIndex = (active - 1) * appointmentsPerPage;
-    const endIndex = startIndex + appointmentsPerPage;
-    const appointments = [];
+    const endIndex = Math.min(
+      startIndex + appointmentsPerPage,
+      totalAppointments
+    );
+    const appointmentsToShow = appointments.slice(startIndex, endIndex); // Slice the appointments for the current page
 
-    for (let i = startIndex; i < endIndex && i < totalAppointments; i++) {
-      appointments.push(
-        <div className="col-lg-4 col-md-6 col-sm-12" key={i}>
-          <AppointmentCard />
-        </div>
-      );
-    }
-
-    return appointments;
+    return appointmentsToShow.map((appointment, index) => (
+      <div className="col-lg-4 col-md-6 col-sm-12" key={index}>
+        <AppointmentCard
+          appointment={appointment}
+          index={index}
+          onDelete={handleDeleteAppointment}
+        />{' '}
+        {/* Pass props to AppointmentCard */}
+      </div>
+    ));
   };
 
-  function AppointmentCard() {
+  function AppointmentCard(props) {
+    const { appointment, index, onDelete } = props; // Destructure props
+
     return (
       <Card
         className="my-5"
@@ -94,7 +112,10 @@ export const AppointmentBooking = () => {
           </div>
           <div className={style.divider} style={{ margin: '15px 0' }}></div>
           <div className="text-center">
-            <Button className={`${style.customButton} fw-bold text-light`}>
+            <Button
+              className={`${style.customButton} fw-bold text-light`}
+              onClick={() => onDelete(index)} // Call the onDelete function passed as a prop
+            >
               Xóa lịch hẹn
             </Button>
           </div>
@@ -106,8 +127,8 @@ export const AppointmentBooking = () => {
   return (
     <>
       <div className="container p-0">
-        <div className="row">{appointments}</div>
-        <div className='d-flex justify-content-center'>
+        <div className="row">{displayAppointments()}</div>
+        <div className="d-flex justify-content-center">
           <Pagination>{items}</Pagination>
         </div>
       </div>
