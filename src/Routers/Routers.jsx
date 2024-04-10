@@ -1,5 +1,5 @@
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
-import { Home, Login, Payment, Shop, SignUp } from '@/pages';
+import { Home } from '@/pages';
 import ListDoctor from '../pages/ListDoctor';
 import ViewDoctorDetail from '@/pages/DoctorDetail';
 import { AppointmentBooking } from '@/pages/AppointmentBooking';
