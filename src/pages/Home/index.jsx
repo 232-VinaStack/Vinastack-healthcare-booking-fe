@@ -83,22 +83,6 @@ const index = () => {
     return result;
   };
 
-<<<<<<< HEAD
-	const queryDoctor = async () => {
-		try {
-			const response = await axios({
-				method: 'get',
-				url: 'http://localhost:8080/doctor',
-				data: { dep_id: idVariable }
-			});
-			if (response?.data) {
-				dispatch(getDoctor(response?.data));
-				dispatch(getDepId(idVariable));
-				dispatch(getDepName(dep_symptoms[idVariable].name));
-				dispatch(getSymptoms(getSymptomsName()));
-				return navigate(`/list-doctor`);
-			}
-=======
   const queryDoctor = async () => {
     try {
       const response = await axios({
@@ -118,7 +102,6 @@ const index = () => {
     }
   };
   let size = Object.keys(dep_symptoms).length;
->>>>>>> 57b5cc7da80380cb832a1d68c4b612451e6db6e5
 
   // const data = symptoms.map(({ dep_id, index, img, name }) => {
   for (let i = 0; i < size; ++i) {
