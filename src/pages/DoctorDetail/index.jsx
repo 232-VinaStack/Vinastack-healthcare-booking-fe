@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { LikeOutlined, MessageOutlined, StarOutlined, EnvironmentOutlined, ArrowRightOutlined, PlusOutlined } from '@ant-design/icons';
+import { LikeOutlined, MessageOutlined, StarOutlined, EnvironmentOutlined, ArrowRightOutlined, PlusOutlined, LeftOutlined } from '@ant-design/icons';
 import { PiStudent } from 'react-icons/pi';
 import { Avatar, List, Space, Input, Button } from 'antd';
 import axios from 'axios';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './doctordetail.module.css';
 import doctor_schedule from './doctor.json';
 import department from './department.json';
 import { DateTimePickerModal } from '@/components';
-
 
 const getDoctor = async (url) => {
     try {
@@ -26,6 +25,8 @@ const ViewDoctorDetail = () => {
     const [openPicker, setOpenPicker] = useState(false);
     const location = useLocation();
     const state = location.state;
+    const navigate = useNavigate();
+
     if(!state) {
         return (
             <>
@@ -71,7 +72,7 @@ const ViewDoctorDetail = () => {
                                         Sức khỏe của bạn là nhiệm vụ của tôi.
                                     </p>
                                 </div>
-                                <div className={styles.buttons + " " + styles.mr}>
+                                <div className={styles.buttons}>
                                     <Button className={styles.button}><p>More about me <ArrowRightOutlined /></p></Button>
                                     <Button className={styles.button}><p>Patient success story</p></Button>
                                 </div>
@@ -106,7 +107,7 @@ const ViewDoctorDetail = () => {
                         <div className={styles.practice_inf + " " + styles.mtop24}>
                             <h2>Thông tin</h2>
                             <div className={styles.inf}>
-                                <div className={styles.contact + " " + styles.mtop8 + " " + styles.mr}>
+                                <div className={styles.contact + " " + styles.mtop8}>
                                     <h3>Liên hệ</h3>
                                     <div>
                                         <p className={styles.list}>Phòng khám: DoctorStack</p>
@@ -143,10 +144,18 @@ const ViewDoctorDetail = () => {
                 </div>
                 <div>
                     <Button
-                        className={styles.add_appointment}
-                        onClick={() => setOpenPicker(true)}
+                        className={styles.add_appointment + " " + styles.pos1}
+                        onClick={() => {
+                            setOpenPicker(true);
+                        }}
                     >
                         <span className={styles.add}><PlusOutlined /></span>
+                    </Button>
+                    <Button
+                        className={styles.add_appointment + " " + styles.pos2}
+                        onClick={() => navigate(-1)}
+                    >
+                        <span className={styles.add}><LeftOutlined /></span>
                     </Button>
                 </div>
                 <DateTimePickerModal
