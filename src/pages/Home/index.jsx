@@ -90,7 +90,7 @@ const index = () => {
 			const response = await axios({
 				method: 'get',
 				url: 'http://localhost:8080/doctor',
-				data: { idVariable }
+				data: { dep_id: idVariable }
 			});
 			if (response?.data) {
 				dispatch(getDoctor(response?.data));
