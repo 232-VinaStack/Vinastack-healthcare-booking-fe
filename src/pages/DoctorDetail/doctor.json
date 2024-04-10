@@ -13,15 +13,15 @@
             { "name": "DoctorStack", "location": "LA (Long An)" }
         ],
         "phone_no": "0123456789",
-        "website": "https://github.com/",
+        "website": "https://vinastack-healthcare-booking-fe.vercel.app/",
         "schedule": [
-            { "date": "Thu 2", "start": "08:00", "end": "16:00"} ,
-            { "date": "Thu 3", "start": "08:00", "end": "16:00"} ,
-            { "date": "Thu 4", "start": "08:00", "end": "16:00"} ,
-            { "date": "Thu 5", "start": "08:00", "end": "16:00"} ,
-            { "date": "Thu 6", "start": "08:00", "end": "16:00"} ,
-            { "date": "Thu 7", "start": "08:00", "end": "11:00"} ,
-            { "date": "Chu nhat", "start": "08:00", "end": "11:00" }
+            { "date": "Thứ 2", "start": "08:00", "end": "16:00"} ,
+            { "date": "Thứ 3", "start": "08:00", "end": "16:00"} ,
+            { "date": "Thứ 4", "start": "08:00", "end": "16:00"} ,
+            { "date": "Thứ 5", "start": "08:00", "end": "16:00"} ,
+            { "date": "Thứ 6", "start": "08:00", "end": "16:00"} ,
+            { "date": "Thứ 7", "start": "08:00", "end": "11:00"} ,
+            { "date": "Chủ nhật", "start": "08:00", "end": "11:00" }
         ],
         "working_at": [ "Benh vien A", "Benh vien B", "Benh vien B", "Giang vien tai dai hoc y duoc HCM" ]
     }
