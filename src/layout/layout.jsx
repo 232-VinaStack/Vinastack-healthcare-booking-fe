@@ -25,10 +25,6 @@ const Layout = ({ children }) => {
         <HeaderAuth />
       </Header>
       <Content style={{ padding: '0 48px' }}>
-        <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>Chọn triệu chứng</Breadcrumb.Item>
-          <Breadcrumb.Item>Chọn bác sĩ</Breadcrumb.Item>
-        </Breadcrumb>
         <div
           style={{
             background: colorBgContainer,
