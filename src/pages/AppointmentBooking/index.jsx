@@ -149,12 +149,12 @@ export const AppointmentBooking = () => {
             <div className="col-8 p-3">
               <div className="fw-bold fs-3">{appointment.name}</div>
               <div
-                className="fs-3 fw-semibold my-2"
+                className="fs-4 fw-semibold my-2"
                 style={{ color: 'rgb(125, 125, 125)' }}
               >
                 {appointment.specialty}
               </div>
-              <div style={{ color: '#4B5563' }} className="fw-medium fs-4">
+              <div style={{ color: '#4B5563' }} className=" fs-4">
                 <FontAwesomeIcon className="me-3" icon={faMapMarkerAlt} />
                 {appointment.hospital}
               </div>
