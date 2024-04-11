@@ -200,10 +200,10 @@ const index = () => {
       </div>
 
       <div className={styles.choose}>
-        <h1 style={{ margin: '0 0 12px 0' }}>Chọn triệu chứng</h1>
+        <h1 style={{ margin: '0 0 12px 0' }}>What is your concern?</h1>
         <form>
           <Search
-            placeholder="Tìm triệu chứng"
+            placeholder="Search for: Symptoms"
             allowClear
             // onSearch={onSearch}
             style={{

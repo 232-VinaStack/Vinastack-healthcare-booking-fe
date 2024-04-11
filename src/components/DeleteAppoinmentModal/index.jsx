@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
+import axios from 'axios';
+
+import PropTypes from 'prop-types';
 
 const DeleteAppoinmentModal = (props) => {
-
-
+  const { appointmentDelete,...modalprop } = props;
+  
   return (
     <>
-      <Modal title="Bạn có chắc chắn xóa?" {...props}>
-        <p>Bạn xác nhận xóa lịch hẹn lúc 12h30 với bác sĩ Nguyễn Văn A</p>
+      <Modal title="Are you sure?" {...modalprop}>
+        <p >
+          Are you sure delete appointment in {appointmentDelete?.appointment_time} with&nbsp;
+          {appointmentDelete?.name}?
+        </p>
       </Modal>
     </>
   );
+};
+DeleteAppoinmentModal.propTypes = {
+  appointmentDelete: PropTypes.object,
 };
 
 export default DeleteAppoinmentModal;

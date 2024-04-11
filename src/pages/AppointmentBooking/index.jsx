@@ -7,48 +7,71 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import style from './style.module.css';
 import React, { useState, useEffect } from 'react';
 import { Pagination } from 'react-bootstrap';
+import { Tabs } from 'antd';
+import axios from 'axios';
+import { appointments_data } from './dummyAppointment';
+import DeleteAppoinmentModal from '../../components/DeleteAppoinmentModal';
+import PropTypes from 'prop-types';
+
+const onChange = (key) => {
+  console.log(key);
+};
 
 export const AppointmentBooking = () => {
   const [active, setActive] = useState(1);
   const items = [];
-  const totalAppointments = 2; // Tổng số AppointmentCard
   const appointmentsPerPage = 6; // Số lượng AppointmentCard trên mỗi trang
-  const [appointments, setAppointments] = useState([]);
+  const [appointments, setAppointments] = useState(appointments_data);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [appointmentDelete, setAppointmentDelete] = useState();
+  const totalAppointments = appointments.length; // Tổng số AppointmentCard
 
-  const handleDeleteAppointment = (index) => {
-    // Update the appointments state with a new array excluding the deleted appointment
-    setAppointments((prevAppointments) =>
-      prevAppointments.filter((appointment, i) => i !== index)
-    );
-    alert(index);
+  const showModal = (id) => {
+    setIsModalOpen(true);
+    setAppointmentDelete(id);
   };
 
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleDeleteAppointment = () => {
+    // Update the appointments state with a new array excluding the deleted appointment
+    const newAppointments = appointments.filter(
+      (appointment) => appointment.id !== appointmentDelete.id
+    );
+    setAppointments(newAppointments);
+    console.log(appointmentDelete.id - 1, newAppointments);
+    setIsModalOpen(false);
+  };
+
+  // Hàm fetchApiData sử dụng Axios để gửi yêu cầu GET đến API
+  const fetchApiData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/appointments');
+      setAppointments(response?.data);
+      console.log(response);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  const apiDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/appointments/${appointmentDelete.id}`
+      );
+      console.log(response);
+      if (response.ok) {
+        setIsModalOpen(false);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   useEffect(() => {
-    const appointments_data = [
-      {
-        id: 1,
-        image:
-          'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        name: 'Dr. John Smith',
-        specialty: 'Cardiologist',
-        hospital: 'Central Hospital',
-        date: new Date(2023, 11, 15, 10, 0),
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      },
-      {
-        id: 2,
-        image:
-          'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelfHx8fGVufDB8fHx8fA%3D%3D',
-        name: 'Dr. Jane Doe',
-        specialty: 'Dermatologist',
-        hospital: 'City Hospital',
-        date: new Date(2023, 11, 16, 14, 0),
-        description:
-          'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      },
-    ];
-    setAppointments(appointments_data);
-  }, []);
+    // Gọi hàm fetchApiData khi component được mount
+    // fetchApiData();
+  }, [isModalOpen]); // [] đảm bảo useEffect chỉ chạy một lần khi component được mount
 
   for (
     let number = 1;
@@ -76,18 +99,14 @@ export const AppointmentBooking = () => {
 
     return appointmentsToShow.map((appointments_data, index) => (
       <div className="col-lg-4 col-md-6 col-sm-12" key={index}>
-        <AppointmentCard
-          appointment={appointments_data}
-          index={index}
-          onDelete={handleDeleteAppointment}
-        />{' '}
+        <AppointmentCard appointment={appointments_data} index={index} />{' '}
         {/* Pass props to AppointmentCard */}
       </div>
     ));
   };
 
-  function AppointmentCard(props) {
-    const { appointment, index, onDelete } = props; // Destructure props
+  const AppointmentCard = (props) => {
+    const { appointment, index } = props; // Destructure props
 
     return (
       <Card
@@ -101,9 +120,21 @@ export const AppointmentBooking = () => {
       >
         <Card.Body>
           <Card.Title className="fw-bold fs-4">
-            May 22, 2023 - 10.00 AM
-            <div className={style.divider} style={{ margin: '15px 0' }}></div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+              }}
+            >
+              {appointment.appointment_time}
+              <p style={{ fontSize: 14, color: '#536474' }}>
+                #{appointment.id}
+              </p>
+            </div>
+            <div className={style.divider} style={{ marginBottom: '15px' }}></div>
           </Card.Title>
+
           <div className="d-flex flex-row">
             <Image
               className="col-4"
@@ -118,38 +149,81 @@ export const AppointmentBooking = () => {
             <div className="col-8 p-3">
               <div className="fw-bold fs-3">{appointment.name}</div>
               <div
-                className="fs-3 fw-semibold my-2"
+                className="fs-4 fw-semibold my-2"
                 style={{ color: 'rgb(125, 125, 125)' }}
               >
                 {appointment.specialty}
               </div>
-              <div style={{ color: '#4B5563' }} className="fw-medium fs-4">
+              <div style={{ color: '#4B5563' }} className=" fs-4">
                 <FontAwesomeIcon className="me-3" icon={faMapMarkerAlt} />
                 {appointment.hospital}
               </div>
             </div>
           </div>
           <div className={style.divider} style={{ margin: '15px 0' }}></div>
-          <div className="text-center">
-            <Button
-              className={`${style.customButton} fw-bold text-light`}
-              onClick={() => onDelete(index)} // Call the onDelete function passed as a prop
+          <div className="" style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+              }}>
+            <button
+              className={`${style.customButtonDelete} fw-bold`}
+              onClick={() => showModal(appointment)} // Call the onDelete function passed as a prop
             >
               Xóa lịch hẹn
-            </Button>
+            </button>
+            <button
+              className={`${style.customButton} fw-bold text-light`}
+              onClick={() => showModal(appointment)} // Call the onDelete function passed as a prop
+            >
+              Xem thông tin
+            </button>
           </div>
         </Card.Body>
       </Card>
     );
-  }
-
+  };
+  AppointmentCard.propTypes = {
+    appointment: PropTypes.object.isRequired,
+    index: PropTypes.number.isRequired,
+  };
   return (
     <>
       <div className="container p-0">
+        <header className="header">
+          <h1 className="heading-primary">My Appointment</h1>
+        </header>
+        <Tabs
+          onChange={onChange}
+          type="card"
+          items={[
+            {
+              label: `Upcoming`,
+              key: 1,
+              children: ``,
+            },
+            {
+              label: `Completed`,
+              key: 2,
+              children: ``,
+            },
+            {
+              label: `Canceled`,
+              key: 3,
+              children: ``,
+            },
+          ]}
+        />
         <div className="row">{displayAppointments()}</div>
         <div className="d-flex justify-content-center">
-          <Pagination>{items}</Pagination>
+          <Pagination size="lg">{items}</Pagination>
         </div>
+        <DeleteAppoinmentModal
+          open={isModalOpen}
+          onOk={handleDeleteAppointment}
+          onCancel={handleCancel}
+          appointmentDelete={appointmentDelete}
+        />
       </div>
     </>
   );
