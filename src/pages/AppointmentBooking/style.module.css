@@ -3,15 +3,31 @@
 }
 
 .customButton {
-  background-color: black;
+  background-color: #2297be;
   width: 147px;
   height: 37px;
   border-radius: 20px;
   border: none;
   font-size: medium;
+  transition: .5s;
+}
+.customButtonDelete{
+  background-color: transparent;
+  border: 1px solid #ff7458;
+  width: 147px;
+  height: 37px;
+  border-radius: 20px;
+  font-size: medium;
+  color: #ff7458;
+  transition: .5s;
+
+}
+.customButtonDelete:hover{
+  opacity: 0.5; 
+
 }
 .customButton:hover {
-  background-color: #4d4c4c; /* Màu nền của nút khi hover */
+  opacity: 0.5; 
 }
 
 .AppointmentCard:last-child {
