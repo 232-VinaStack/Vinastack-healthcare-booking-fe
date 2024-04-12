@@ -1,12 +1,11 @@
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import { Pagination } from 'antd';
 import Image from 'react-bootstrap/Image';
 import 'bootstrap/dist/css/bootstrap.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import style from './style.module.css';
 import React, { useState, useEffect } from 'react';
-import { Pagination } from 'react-bootstrap';
 import { Tabs } from 'antd';
 import axios from 'axios';
 import { appointments_data } from './dummyAppointment';
@@ -29,6 +28,10 @@ export const AppointmentBooking = () => {
   const showModal = (id) => {
     setIsModalOpen(true);
     setAppointmentDelete(id);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setActive(pageNumber);
   };
 
   const handleCancel = () => {
@@ -132,7 +135,10 @@ export const AppointmentBooking = () => {
                 #{appointment.id}
               </p>
             </div>
-            <div className={style.divider} style={{ marginBottom: '15px' }}></div>
+            <div
+              className={style.divider}
+              style={{ marginBottom: '15px' }}
+            ></div>
           </Card.Title>
 
           <div className="d-flex flex-row">
@@ -161,11 +167,14 @@ export const AppointmentBooking = () => {
             </div>
           </div>
           <div className={style.divider} style={{ margin: '15px 0' }}></div>
-          <div className="" style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'baseline',
-              }}>
+          <div
+            className=""
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+            }}
+          >
             <button
               className={`${style.customButtonDelete} fw-bold`}
               onClick={() => showModal(appointment)} // Call the onDelete function passed as a prop
@@ -216,7 +225,13 @@ export const AppointmentBooking = () => {
         />
         <div className="row">{displayAppointments()}</div>
         <div className="d-flex justify-content-center">
-          <Pagination size="lg">{items}</Pagination>
+          <Pagination
+            current={active}
+            total={totalAppointments}
+            pageSize={appointmentsPerPage}
+            onChange={handlePageChange}
+            showSizeChanger={false}
+          />
         </div>
         <DeleteAppoinmentModal
           open={isModalOpen}
