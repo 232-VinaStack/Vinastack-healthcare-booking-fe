@@ -9,9 +9,15 @@ import doctor_schedule from './doctor.json';
 import department from './department.json';
 
 
-const getDoctor = async () => {
+const getDoctor = async (id) => {
     try {
-        const response = await axios.get("http://localhost:8080/doctor");
+        const response = await axios.get("http://localhost:8080/doctor",
+        {
+            params:{
+                id: id,
+            }
+        });
+        console.log(response);
         return response.data;
     }
     catch (error) {
@@ -20,7 +26,7 @@ const getDoctor = async () => {
     return [];
 }
 
-const ViewDoctorDetail = () => {
+const ViewDoctorDetail = (props) => {
     const [data, setData] = useState([]);
     const location = useLocation();
     const state = location.state;
@@ -40,7 +46,7 @@ const ViewDoctorDetail = () => {
         (
             async () => {
                 try {
-                    const response = await getDoctor("http://localhost:8080/doctor");
+                    const response = await getDoctor(props.id);
                     setData([response[state.item.id - 1]]);
                     // setData([state.item])
                 } catch (err) {
