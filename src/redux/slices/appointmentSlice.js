@@ -31,6 +31,7 @@ export const appointmentSlice = createSlice({
     resetNewAppointment: (state) => {
       state.newAppointment = {
         ...state.newAppointment,
+        clinic: null,
         doctor_id: null,
         start_time: '',
         appointment_date: '',

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Style from './style.module.css';
 import {
   makeAppointment,
-  // resetNewAppointment,
+  resetNewAppointment,
   sendAppointment,
 } from '@/redux/slices/appointmentSlice';
 import dayjs from 'dayjs';
@@ -71,9 +71,11 @@ const DateTimePickerModal = ({ open, setOpen, data = [] }) => {
   const handleOk = (e) => {
     e.preventDefault();
     dispatch(sendAppointment());
-    // dispatch(resetNewAppointment());
+    dispatch(resetNewAppointment());
     setOpen(false);
   };
+
+  useSelector((state) => console.log(state.appointment.newAppointment));
 
   const handleCancel = () => {
     setOpen(false);
