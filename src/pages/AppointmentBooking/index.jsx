@@ -37,23 +37,16 @@ export const AppointmentBooking = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
-  const handleDeleteAppointment = () => {
-    // Update the appointments state with a new array excluding the deleted appointment
-    const newAppointments = appointments.filter(
-      (appointment) => appointment.id !== appointmentDelete.id
-    );
-    setAppointments(newAppointments);
-    console.log(appointmentDelete.id - 1, newAppointments);
-    setIsModalOpen(false);
-  };
-
+  
   // Hàm fetchApiData sử dụng Axios để gửi yêu cầu GET đến API
   const fetchApiData = async () => {
     try {
       const response = await axios.get('http://localhost:8080/appointments');
-      setAppointments(response?.data);
-      console.log(response);
+      if (response?.data) {
+
+        setAppointments(response?.data);
+        console.log(response);
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -71,9 +64,21 @@ export const AppointmentBooking = () => {
       console.error('Error fetching data:', error);
     }
   };
+
+  const handleDeleteAppointment = () => {
+    // Update the appointments state with a new array excluding the deleted appointment
+    apiDelete();
+    const newAppointments = appointments.filter(
+      (appointment) => appointment?.id !== appointmentDelete.id
+    );
+    setAppointments(newAppointments);
+    console.log(appointmentDelete.id - 1, newAppointments);
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
     // Gọi hàm fetchApiData khi component được mount
-    // fetchApiData();
+    fetchApiData();
   }, [isModalOpen]); // [] đảm bảo useEffect chỉ chạy một lần khi component được mount
 
   for (
@@ -130,9 +135,9 @@ export const AppointmentBooking = () => {
                 alignItems: 'baseline',
               }}
             >
-              {appointment.appointment_time}
+              {appointment?.start_time}
               <p style={{ fontSize: 14, color: '#536474' }}>
-                #{appointment.id}
+                #{appointment?.id}
               </p>
             </div>
             <div
@@ -150,19 +155,19 @@ export const AppointmentBooking = () => {
                 height: '109px',
                 objectFit: 'cover',
               }}
-              src={appointment.image}
+              src={appointment?.doctor_id?.avatarLink}
             />
             <div className="col-8 p-3">
-              <div className="fw-bold fs-3">{appointment.name}</div>
+              <div className="fw-bold fs-3">{appointment?.doctor_id?.name}</div>
               <div
                 className="fs-4 fw-semibold my-2"
                 style={{ color: 'rgb(125, 125, 125)' }}
               >
-                {appointment.specialty}
+                {appointment?.doctor_id?.education}
               </div>
               <div style={{ color: '#4B5563' }} className=" fs-4">
                 <FontAwesomeIcon className="me-3" icon={faMapMarkerAlt} />
-                {appointment.hospital}
+                {appointment?.clinic}
               </div>
             </div>
           </div>
