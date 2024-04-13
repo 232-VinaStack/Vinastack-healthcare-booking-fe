@@ -9,9 +9,16 @@ import doctor_schedule from './doctor.json';
 import department from './department.json';
 import { DateTimePickerModal } from '@/components';
 
-const getDoctor = async (url) => {
+
+const getDoctor = async (id) => {
     try {
-        const response = await axios.get(url);
+        const response = await axios.get("http://localhost:8080/doctor",
+        {
+            params:{
+                id: id,
+            }
+        });
+        console.log(response);
         return response.data;
     }
     catch (error) {
@@ -20,26 +27,13 @@ const getDoctor = async (url) => {
     return [];
 }
 
-const ViewDoctorDetail = () => {
+const ViewDoctorDetail = (props) => {
     const [data, setData] = useState([]);
     const [openPicker, setOpenPicker] = useState(false);
     const location = useLocation();
     const state = location.state;
     const navigate = useNavigate();
-
-    if(!state) {
-        return (
-            <>
-                nothing to show
-            </>
-        );
-    }
-    let dep_name = "";
-    for(let i = 0; i < department.length; ++i) {
-        if(department[i].id == state.dep_id) dep_name = department[i].department;
-    }
-
-	useEffect(() => {
+    useEffect(() => {
         (
             async () => {
                 try {
@@ -52,6 +46,19 @@ const ViewDoctorDetail = () => {
             }
         )();
 	}, []);
+    if(!state) {
+        return (
+            <>
+                nothing to show
+            </>
+        );
+    }
+    let dep_name = "";
+    for(let i = 0; i < department.length; ++i) {
+        if(department[i].id == state.dep_id) dep_name = department[i].department;
+    }
+
+	
     
     if(data.length) {
         const doctor = data[0];
