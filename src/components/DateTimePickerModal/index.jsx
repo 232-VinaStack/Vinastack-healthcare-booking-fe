@@ -99,8 +99,9 @@ const DateTimePickerModal = ({ open, setOpen }) => {
         <div style={{ margin: 'auto', width: '80%' }}>
           <p className={Style.text}>Chọn giờ</p>
           <div>
-            {availableHours.map((item) => (
+            {availableHours.map((item, index) => (
               <button
+                key={index}
                 style={{
                   display: 'inline-block',
                   marginBottom: '10px',
