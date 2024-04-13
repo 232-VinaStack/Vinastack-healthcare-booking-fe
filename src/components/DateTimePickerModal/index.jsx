@@ -72,6 +72,7 @@ const DateTimePickerModal = ({ open, setOpen, data = [] }) => {
     e.preventDefault();
     dispatch(sendAppointment());
     dispatch(resetNewAppointment());
+    alert('Đặt lịch thành công');
     setOpen(false);
   };
 
