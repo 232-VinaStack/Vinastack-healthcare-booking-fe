@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getDoctor, getDepId, getDepName } from '@/redux/slices/doctorSlice';
 import { getSymptoms } from '@/redux/slices/symtomsSlice';
+import { makeAppointment } from '@/redux/slices/appointmentSlice';
 
 const combine_syms = (dep, symptoms) => {
   const dep_symptoms = {};
@@ -77,7 +78,7 @@ const index = () => {
       (item) => syms.indexOf(item.index) > -1
     );
     const result = fitler_syms.reduce((res, item) => {
-      res.push(item.name);
+      res.push({ id: item.index, name: item.name });
       return res;
     }, []);
     return result;
@@ -94,7 +95,8 @@ const index = () => {
         dispatch(getDoctor(response?.data));
         dispatch(getDepId(idVariable));
         dispatch(getDepName(dep_symptoms[idVariable].name));
-        dispatch(getSymptoms(getSymptomsName()));
+        const symptoms = getSymptomsName();
+        dispatch(makeAppointment({ field: 'symptoms', fieldData: symptoms }));
         return navigate(`/list-doctor`);
       }
     } catch (error) {
@@ -184,7 +186,7 @@ const index = () => {
               Make an apointment
             </Button>
             <Button className={styles.button} style={{ margin: '0 16px 0' }}>
-              Consult now 
+              Consult now
             </Button>
           </div>
         </div>

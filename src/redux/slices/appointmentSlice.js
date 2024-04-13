@@ -5,21 +5,13 @@ export const appointmentSlice = createSlice({
   name: 'appointment',
   initialState: {
     newAppointment: {
-      doctor_id: 1,
-      patient_id: 1,
+      clinic: null,
+      doctor_id: null,
       start_time: '',
-      end_time: '',
       appointment_date: '',
-      symptoms: [
-        {
-          id: 1,
-          name: 'Cough',
-        },
-        {
-          id: 2,
-          name: 'Fever',
-        },
-      ],
+      symptoms: [],
+      user_name: 'John Doe',
+      user_phone: '1234567890',
     },
     listAppointment: [],
   },
@@ -37,7 +29,14 @@ export const appointmentSlice = createSlice({
       );
     },
     resetNewAppointment: (state) => {
-      state.newAppointment = {};
+      state.newAppointment = {
+        ...state.newAppointment,
+        clinic: null,
+        doctor_id: null,
+        start_time: '',
+        appointment_date: '',
+        symptoms: []
+      };
     },
     sendAppointment: (state) => {
       createAppointment(state.newAppointment).then((data) => {
@@ -51,7 +50,8 @@ export const {
   makeAppointment,
   addAppointment,
   removeAppointment,
+  resetNewAppointment,
   sendAppointment,
 } = appointmentSlice.actions;
 
-export default appointmentSlice;
+export default appointmentSlice.reducer;
