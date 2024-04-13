@@ -7,9 +7,11 @@ import axios from 'axios';
 import { useState } from 'react';
 import { DateTimePickerModal } from '../../components';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import doctors from './doctors.json';
 import styles from './listdoctor.module.css';
+import { makeAppointment } from '@/redux/slices/appointmentSlice';
+import { fetchAvailableDates } from '@/services/dataService';
 
 
 const {Search} = Input;
@@ -22,9 +24,11 @@ const IconText = ({ icon, text }) => (
 );
 const ListDoctor = () => {
 	const [open, setOpen] = React.useState(false);
+  const [dates, setDates] = React.useState([]);
 	const dep_id = useSelector((state) => state.doctor.dep_id);
 	const dep_name = useSelector((state) => state.doctor.dep_name);
 	const doctors = useSelector((state) => state.doctor.doctor);
+  const dispatch = useDispatch();
 
 	if (!doctors || doctors.length == 0) {
 		return (
@@ -33,6 +37,16 @@ const ListDoctor = () => {
 			</div>
 		);
 	}
+
+  const handleClick = (id) => {
+    setOpen(true);
+    dispatch(makeAppointment({field: 'doctor_id', fieldData: id}));
+    dispatch(makeAppointment({field: 'clinic', fieldData: dep_id}))
+    fetchAvailableDates(id).then((data) => {
+      console.log(data);
+      setDates(data);
+    });
+  };
 
 	const data = doctors.map(({id, name, avatarLink, expYear, education, clinics}) => {
 		return (
@@ -137,7 +151,7 @@ const ListDoctor = () => {
 											className={styles.button}
 											key="list-loadmore-edit2"
 											type="primary"
-											onClick={() => setOpen(true)}
+											onClick={() => handleClick(item.id)}
 										>
 											Đặt lịch hẹn
 										</Button>
@@ -159,6 +173,7 @@ const ListDoctor = () => {
 				title={'Chọn lịch hẹn'}
 				open={open}
 				setOpen={setOpen}
+        data={dates}
 			/>
 		</div>
 	);

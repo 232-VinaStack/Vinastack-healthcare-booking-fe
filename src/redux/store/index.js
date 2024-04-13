@@ -2,13 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
-import { appointmentSlice } from '../slices/appointmentSlice.js';
+import appointmentReducer from '../slices/appointmentSlice.js';
 import doctorReducer from '../slices/doctorSlice.js';
 import symptomsReducer from '../slices/symtomsSlice.js'
 
 // Combine reducers
 const rootReducer = combineReducers({
-  appointment: appointmentSlice.reducer,
+  appointment: appointmentReducer,
   doctor: doctorReducer,
   symptoms: symptomsReducer,
 });

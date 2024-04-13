@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 // services/dataService.js
 export const fetchUserData = async (userId) => {
   try {
@@ -18,7 +20,7 @@ export const fetchUserData = async (userId) => {
 export const createAppointment = async (appointmentData) => {
   try {
     const response = await fetch(
-      `http://172.22.176.1:8080/appointments/create`,
+      `http://localhost:8080/appointments/create`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -31,3 +33,20 @@ export const createAppointment = async (appointmentData) => {
     return null;
   }
 };
+
+export const fetchAvailableDates = async (id) => {
+  try {
+    const response = await fetch(
+      `http://localhost:8080/doctor/${id}/schedules`,
+      {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+    return await response.json();
+  }
+  catch (error) {
+    console.error('Error fetching available dates:', error);
+    return [];
+  }
+}
