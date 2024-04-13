@@ -1,4 +1,4 @@
-li {
+.local li {
     list-style-type: none;
 }
 .mtop24 {
@@ -7,58 +7,100 @@ li {
 .mtop8 {
     margin-top: 8px;
 }
-p {
-    font-size: 20px;
+.local p {
+    font-size: 1.1vw;
+    font-weight: 500;
+    vertical-align: middle;
+    margin-bottom: 0;
+}
+.local .list {
+    font-size: 1.1vw;
     line-height: 2;
 }
-h2 {
-    font-size: 28px;
+.local h2 {
+    font-size: 2.2vw;
 }
-h3 {
-    font-size: 24px;
+.local h3 {
+    font-size: 1.9vw;
 }
 .mr {
-    margin-left: 12px;
+    /* margin-left: 12px; */
     margin-top: 8px;
 }
 .block {
     width: fit-content;
     height: fit-content;
     border: 1px solid black;
-    border-radius: 8px;
+    border-radius: 4px;
     padding-right: 40px;
+}
+.wrap {
+    width: 80%;
+    border: 1px solid rgb(219, 220, 255);
+    margin: auto;
+    padding: 40px;
+    border-radius: 4px;
+    background-color: #f2f8ffa8;
+}
+.local ul {
+    padding: 0;
+}
+.local .list li {
+    margin-left: 20px;
 }
 
 .doctor_overview {
     display: flex;
-    width: 80%;
-    max-height: 500px;
-    margin: auto;
-    background-color: #ededed;
-    padding: 32px;
-    border-radius: 12px 12px 0 0;
+    max-height: 400px;
+    padding: 32px 32px 20px;
+    border-radius: 4px;
+    background-color: #7fb2ff1f;
+    box-shadow: 2px 2px 5px rgb(185, 199, 255);
 }
 
 .overview {
     width: 60%;
 }
 
+.local .buttons {
+    margin-top: 3vh;
+    width: 100%;
+}
+.local .button {
+    height: fit-content;
+    border-radius: 0;
+    border: 2px solid black;
+    font-weight: 500;
+    border-radius: 2px;
+}
+.local .button:first-child {
+    background-color: #0066ffa8;
+    margin-right: 20px;
+    color: white;
+    border-color: #0066ffa8;
+}
+.local .button:last-child {
+    border-color: #0066ffa8;
+}
+
 .detail {
-    width: 80%;
-    margin: auto;
-    padding: 32px;
-    background-color: #ededed;
+    padding: 0 32px 32px;
     border-radius: 0 0 12px 12px;
 }
 
 .img {
     width: 40%;
     overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid #c0d9ff;
 }
 .img img {
     width: 100%;
-    border-radius: 8px;
+    height: 100%;
+    border-radius: 4px;
+    object-fit: cover;
 }
+
 
 .inf {
     display: grid;
@@ -76,4 +118,30 @@ h3 {
 .text {
     display: inline-block;
     vertical-align: top;
+}
+
+.add_appointment {
+    display: block;
+    width: 4vw;
+    height: 4vw;
+    border-radius: 50%;
+    position: fixed;
+    border: 2px solid rgb(115, 118, 255);
+}
+.add {
+    font-size: 2vw;
+    color: rgb(115, 118, 255);
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+.pos1 {
+    bottom: 12vh; right: 6vw;
+}
+.pos2 {
+    top: 12vh; right: 6vw;
+}
+
+.hide {
+    display: none;
 }
