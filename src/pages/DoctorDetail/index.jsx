@@ -72,7 +72,7 @@ const ViewDoctorDetail = (props) => {
                                 <h2>Xin chào: <br />Tôi là {doctor.name}</h2>
                                 <div className={styles.mr}>
                                     <p>Tên: {doctor.name}</p>
-                                    <p>Tuổi: {doctor.age}</p>
+                                    {/* <p>Tuổi: {doctor.age}</p> */}
                                     <p>Học vấn: Tốt nghiệp {doctor.education}</p>
                                     <p>
                                         Tôi cam kết sẽ chữa dứt bệnh, quý khách hàng cứ yên tâm. <br />

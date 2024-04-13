@@ -124,7 +124,7 @@ const index = () => {
             className={styles.symptom}
           >
             <div className={styles.symptom_image}>
-              <img className={styles.img} src={img} alt="" />
+              <img className={styles.img} src={img} alt="symptoms image" />
             </div>
             <div className={styles.description}>
               <p className={styles.p}>{name}</p>
